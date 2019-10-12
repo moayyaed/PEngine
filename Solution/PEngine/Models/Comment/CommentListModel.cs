@@ -7,5 +7,6 @@ namespace PEngine.Models.Comment
 {
     public class CommentListModel
     {
+        public ApiResult Status { get; set; }
     }
 }

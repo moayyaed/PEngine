@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace PEngine.Models.Comment
 {
-    public class CommentModifyResultModel : ApiResultModel
+    public class CommentModifyResultModel : IApiResultModel
     {
+        public ApiResult Status { get; set; }
     }
 }

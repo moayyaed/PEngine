@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PEngine.Models.Comment
+namespace PEngine.Models
 {
-    public class CommentWriteResultModel : IApiResultModel
+    public enum ApiResult
+    {
+        success, fail
+    }
+
+    public interface IApiResultModel
     {
         public ApiResult Status { get; set; }
     }
