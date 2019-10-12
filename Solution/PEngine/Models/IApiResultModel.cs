@@ -13,5 +13,6 @@ namespace PEngine.Models
     public interface IApiResultModel
     {
         public ApiResult Status { get; set; }
+        public string    Message { get; set; }
     }
 }

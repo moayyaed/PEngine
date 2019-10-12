@@ -8,5 +8,6 @@ namespace PEngine.Models.Comment
     public class CommentWriteResultModel : IApiResultModel
     {
         public ApiResult Status { get; set; }
+        public string Message { get; set; }
     }
 }
