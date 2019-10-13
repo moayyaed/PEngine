@@ -12,10 +12,12 @@ namespace PEngine.Models
 {
     public class BlogContext : DbContext
     {
+        public DbSet<BlogMetaModel> Metadata { get; set; }
         public DbSet<UserModel> Users { get; set; }
         public DbSet<CommentModel> Comments { get; set; }
         public DbSet<FileModel> Files { get; set; }
         public DbSet<PostModel> Posts { get; set; }
+        public DbSet<PostCategoryModel> PostCategories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseNpgsql("");
