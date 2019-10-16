@@ -35,21 +35,6 @@
       "files": [
         "jquery.min.js"
       ]
-    },
-    {
-      "library": "jquery-ui@1.12.1",
-      "destination": "wwwroot/lib/jquery-ui/",
-      "files": [
-        "build/release-test.js",
-        "build/release-test.min.js",
-        "build/release.js",
-        "build/release.min.js",
-        "build/themes",
-        "build/tasks/build.js",
-        "build/tasks/build.min.js",
-        "build/tasks/testswarm.js",
-        "build/tasks/testswarm.min.js"
-      ]
     }
-  ]
+]
 }
