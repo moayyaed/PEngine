@@ -1,0 +1,74 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+.wrapper {
+    background: #343434;
+    color: #f0f0f0;
+    display: flex;
+    width: 100%;
+}
+
+.wrapper > div {
+    height: 100%;
+}
+
+.wrapper > div.side {
+    background: #303030;
+    border-right: 1px solid #4cff00;
+    height: 100vh;
+    width: 270px;
+    padding: 20px;
+}
+
+.wrapper > div.side h4 {
+    margin-bottom: 15px;
+}
+
+.wrapper > div.side .profile img {
+    pointer-events: none;
+    
+    display: block;
+    height: 229px;
+    width: 229px;
+    
+    margin: 15px 0;
+    border: 1px solid #f0f0f0;
+    background: #f0f0f0;
+}
+
+.wrapper > div.side .profile .profile-text {
+    margin: 15px 0;
+}
+
+.wrapper > div.side .profile .profile-text h5 span {
+    font-size: 10pt;
+    color: #bcbcbc;
+}
+
+.wrapper > div.side .profile .profile-text p {
+    font-size: 10pt;
+    margin: 5px 0;
+}
+
+.wrapper > div.side .profile .profile-sns {
+    text-align: center;
+}
+
+.wrapper > div.side .profile .profile-sns a{
+    margin: 0 15px;
+    font-size: 18pt;
+    color: inherit;
+}
+
+.wrapper > div.side .profile .profile-sns a:hover {
+    color: #bcbcbc;
+}
+
+.wrapper > div.side .profile .profile-sns a:active {
+    color: #707070;
+}
+
+.wrapper > div.side .side-block {
+    margin: 15px 0;
+}
