@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using React.AspNet;
 
 namespace PEngine
 {
@@ -27,8 +26,6 @@ namespace PEngine
             services.AddMvc();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddReact();
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -49,10 +46,6 @@ namespace PEngine
 
             app.UseAuthorization();
 
-            app.UseReact(config =>
-            {
-
-            });
 
             app.UseEndpoints(endpoints =>
             {
