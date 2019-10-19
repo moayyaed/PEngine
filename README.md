@@ -1,6 +1,8 @@
 # PEngine Content Management System
 
-<img src="Documentation/PEngineBanner.png" align="center" />
+<p align="center">
+    <img src="Documentation/PEngineBanner.png" />
+</p>
 
 [![Build Status](https://dev.azure.com/knowledge0636/PEngine/_apis/build/status/0x00000FF.PEngine?branchName=master)](https://dev.azure.com/knowledge0636/PEngine/_build/latest?definitionId=1&branchName=master)
 
