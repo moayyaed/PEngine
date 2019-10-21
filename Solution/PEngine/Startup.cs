@@ -23,8 +23,6 @@ namespace PEngine
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
-
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
@@ -40,8 +38,6 @@ namespace PEngine
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
             app.UseRouting();
 
             app.UseAuthorization();
