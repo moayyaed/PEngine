@@ -13,22 +13,22 @@ namespace PEngine.Controllers
     {
         public async Task<List<CommentModel>> List(CommentListModel listModel)
         {
-
+            throw new NotImplementedException();
         }
 
         public async Task<CommentWriteResultModel> Write(CommentModel model)
         {
-
+            throw new NotImplementedException();
         }
 
         public async Task<CommentModifyResultModel> Modify(CommentModel model)
         {
-
+            throw new NotImplementedException();
         }
 
         public async Task<CommentDeleteResultModel> Delete(CommentDeleteModel deleteModel)
         {
-
+            throw new NotImplementedException();
         }
     }
 }

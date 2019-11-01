@@ -29,13 +29,13 @@ namespace PEngine.Controllers
 
         public Task<IActionResult> List([FromQuery]PostListModel listModel, PostSearchModel searchModel)
         {
-
+            throw new NotImplementedException();
         }
 
 
         public async Task<IActionResult> Read([FromQuery]PostModel postReadModel)
         {
-
+            throw new NotImplementedException();
         }
 
         public IActionResult Write()
@@ -46,7 +46,7 @@ namespace PEngine.Controllers
         [HttpPut]
         public async Task<bool> Write([FromBody]PostModel postModel)
         {
-
+            throw new NotImplementedException();
         }
 
     }
