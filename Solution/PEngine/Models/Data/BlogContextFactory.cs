@@ -18,7 +18,10 @@ namespace PEngine.Models.Data
 
         public static void          Initialize(DBMSType type)
         {
-            if (Context != null) return;
+            if (Context != null)
+            {
+                return;
+            }
 
             Context = type switch
             {
