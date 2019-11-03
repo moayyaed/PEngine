@@ -20,23 +20,16 @@ namespace PEngine.Models.Data
         {
             if (Context != null) return;
 
-            switch (type)
+            Context = type switch
             {
-                case DBMSType.Postgresql:
-                    Context = new PostgresqlBlogContext();
-                    break;
+                DBMSType.Postgresql => new PostgresqlBlogContext(),
 
-                case DBMSType.SQLite:
-                    Context = new SqliteBlogContext();
-                    break;
+                DBMSType.SQLite => new SqliteBlogContext(),
 
-                case DBMSType.SqlServer:
-                    Context = new SqlServerBlogContext();
-                    break;
+                DBMSType.SqlServer => new SqlServerBlogContext(),
 
-                default:
-                    throw new NotImplementedException();
-            }
+                _ => throw new NotImplementedException(),
+            };
         }
     }
 
