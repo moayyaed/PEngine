@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PEngine.Models.Data
 {
-    public class MSSQLBlogContext : BlogContext
+    public class SqlServerBlogContext : BlogContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer("");
