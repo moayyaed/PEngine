@@ -16,6 +16,15 @@ PEngine is a content management system (CMS) for maximizing personal blogging ex
  * `git clone https://github.com/0x00000FF/PEngine`
  * `dotnet build Solution`
 
+## Contribution
+
+You're always welcomed to contribute to PEngine project. Feel free to make issues or pull request. For example:
+
+ * Code quality improvements
+ * Feature improvements
+ * Bug fixes
+ * or...?
+
 ## Why "PEngine"?
 
 Please refer [KnowledgeVM](https://github.com/0x00000ff/knowledge-vm), then you can figure out that what "P" stands for.
