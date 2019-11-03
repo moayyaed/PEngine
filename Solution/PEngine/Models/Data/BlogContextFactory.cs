@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Builder;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,10 +8,10 @@ namespace PEngine.Models.Data
 {
     public enum DBMSType
     {
-        Postgresql, SQLite, SqlServer
+        SqlServer = 0, Postgresql = 1, SQLite = 2
     }
 
-    public class BlogContextFactory
+    public static class BlogContextFactory
     {
         public static string        ConnectionString { get; set; }
         public static BlogContext   Context { get; set; }
@@ -36,6 +37,19 @@ namespace PEngine.Models.Data
                 default:
                     throw new NotImplementedException();
             }
+        }
+    }
+
+    public static class IApplicationBuilderExtension
+    {
+        public static IApplicationBuilder UseDatabase(this IApplicationBuilder builder, 
+                                                        DBMSType dbmsType, 
+                                                        string connectionString)
+        {
+            BlogContextFactory.ConnectionString = connectionString;
+            BlogContextFactory.Initialize(dbmsType);
+            
+            return builder;
         }
     }
 }

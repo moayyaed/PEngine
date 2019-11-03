@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using PEngine.Models.Data;
+
 namespace PEngine
 {
     public class Startup
@@ -39,6 +41,9 @@ namespace PEngine
             {
                 endpoints.MapControllers();
             });
+
+            app.UseDatabase((DBMSType)Configuration.GetValue<int>("Dbms"), 
+                            Configuration.GetValue<string>("ConnectionString"));
         }
     }
 }
