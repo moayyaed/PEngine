@@ -3,14 +3,10 @@ using PEngine.Models.Comment;
 using PEngine.Models.File;
 using PEngine.Models.Post;
 using PEngine.Models.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace PEngine.Models
+namespace PEngine.Models.Data
 {
-    public class BlogContext : DbContext
+    public abstract class BlogContext : DbContext
     {
         public DbSet<BlogMetaModel> Metadata { get; set; }
         public DbSet<UserModel> Users { get; set; }
@@ -18,8 +14,5 @@ namespace PEngine.Models
         public DbSet<FileModel> Files { get; set; }
         public DbSet<PostModel> Posts { get; set; }
         public DbSet<PostCategoryModel> PostCategories { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql("");
     }
 }
