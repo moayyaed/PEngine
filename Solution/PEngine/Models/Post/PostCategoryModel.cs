@@ -13,7 +13,9 @@ namespace PEngine.Models.Post
 
         public string BuildUrl()
         {
-            throw new NotImplementedException();
+            var args = String.Join("&", Arguments);
+            
+            return $"/Category/{Name}?{args}";
         }
     }
 }
