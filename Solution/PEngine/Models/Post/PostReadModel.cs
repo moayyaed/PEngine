@@ -7,16 +7,16 @@ namespace PEngine.Models.Post
 {
     public class PostReadModel
     {
-        public long id { get; set; }
+        public long Id { get; set; }
 
-        public long searchPage { get; set; }
-        public string searchFilter { get; set; }
-        public string searchKeyword { get; set; }
-        public long searchTimestamp { get; set; }
+        public long SearchPage { get; set; }
+        public string SearchFilter { get; set; }
+        public string SearchKeyword { get; set; }
+        public long SearchTimestamp { get; set; }
 
         public static PostReadModel WithId(long id)
         {
-            return new PostReadModel { id = id };
+            return new PostReadModel { Id = id };
         }
     }
 }
