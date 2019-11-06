@@ -1,4 +1,4 @@
-name: Linux
+name: Linux Debug
 
 on: [push]
 
@@ -8,9 +8,9 @@ jobs:
     runs-on: centos-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '3.0.100'
     - name: Build with dotnet
