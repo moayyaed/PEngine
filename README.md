@@ -23,7 +23,7 @@ You're always welcomed to contribute to PEngine project. Feel free to make issue
  * Code quality improvements
  * Feature improvements
  * Bug fixes
- * or...?
+ * or...? ([How about the good first issues?](https://github.com/0x00000FF/PEngine/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+First+Issue%22))
 
 ## Why "PEngine"?
 
