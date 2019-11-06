@@ -1,11 +1,11 @@
-name: Github Action Build
+name: Linux
 
 on: [push]
 
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: centos-latest
 
     steps:
     - uses: actions/checkout@v1
@@ -15,3 +15,5 @@ jobs:
         dotnet-version: '3.0.100'
     - name: Build with dotnet
       run: dotnet build Solution --configuration Release
+    - name: Test with dotnet
+      run: dotnet test Solution --configuration Release
