@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PEngine.Models.Post;
+using PEngine.Models.Search;
 
 namespace PEngine.Controllers
 {
@@ -27,7 +28,7 @@ namespace PEngine.Controllers
             return RedirectToActionPermanent("Read", PostReadModel.WithId(articleId));
         }
 
-        public Task<IActionResult> List([FromQuery]PostListModel listModel, PostSearchModel searchModel)
+        public Task<IActionResult> List([FromQuery]PostListModel listModel, SearchRequestModel searchModel)
         {
             throw new NotImplementedException();
         }
