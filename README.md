@@ -10,10 +10,10 @@ PEngine is a content management system (CMS) for maximizing personal blogging ex
 
 ## Build Status
 
-|         | Debug | Release |
-|---------|-------|---------|
-| Windows | ![Build Status](https://github.com/0x00000FF/PEngine/workflows/Windows%20Debug/badge.svg)  | ![Build Status](https://github.com/0x00000FF/PEngine/workflows/Windows/badge.svg) |
-| Linux   | ![Build Status](https://github.com/0x00000FF/PEngine/workflows/Linux%20Debug/badge.svg)  | ![Build Status](https://github.com/0x00000FF/PEngine/workflows/Linux/badge.svg) |
+|         | Debug | Release | Docker Release |
+|---------|-------|---------|----------------|
+| Windows | ![Build Status](https://github.com/0x00000FF/PEngine/workflows/Windows%20Debug/badge.svg)  | ![Build Status](https://github.com/0x00000FF/PEngine/workflows/Windows/badge.svg) |  |
+| Linux   | ![Build Status](https://github.com/0x00000FF/PEngine/workflows/Linux%20Debug/badge.svg)  | ![Build Status](https://github.com/0x00000FF/PEngine/workflows/Linux/badge.svg) |  |
 
 ## Code Quality Status
 
