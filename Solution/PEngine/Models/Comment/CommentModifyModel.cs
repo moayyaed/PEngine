@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 
 namespace PEngine.Models.Comment
 {
-    public class CommentListModel
+    public class CommentModifyModel
     {
-
     }
 }
