@@ -43,10 +43,11 @@ namespace PEngine
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                
             });
 
-            app.UseDatabase((DBMSType)Configuration.GetValue<int>("Dbms"), 
-                            Configuration.GetValue<string>("ConnectionString"));
+            app.UseDatabase((DBMSType)Configuration.GetValue("Dbms", 0), 
+                            Configuration.GetValue("ConnectionString", string.Empty));
         }
     }
 }
