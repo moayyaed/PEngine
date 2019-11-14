@@ -6,7 +6,7 @@
 
 ![License](https://img.shields.io/github/license/0x00000FF/PEngine) ![dotnet Version](https://img.shields.io/badge/dotnet-3.0-blueviolet)
 
-PEngine is a content management system (CMS) for maximizing personal blogging experience. It is written in C#, powered by ASP.NET Core WebAPI and Blazor.
+PEngine is a content management system (CMS) for maximizing personal blogging experience. It is written in C#, powered by .NET Core 3.0 and ASP.NET Core MVC
 
 ## Build Status
 
