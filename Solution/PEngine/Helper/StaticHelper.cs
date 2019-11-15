@@ -15,9 +15,11 @@ namespace PEngine.Helper
         {
             get
             {
-                if (MetaNeedUpdated)
+                if (MetaNeedUpdated &&
+                    BlogContextFactory.Context.Metadata.Any())
                 {
                     meta = BlogContextFactory.Context.Metadata.First();
+                    MetaNeedUpdated = false;
                 }
 
                 return meta;
