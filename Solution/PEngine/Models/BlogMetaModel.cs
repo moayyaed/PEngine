@@ -7,10 +7,10 @@ namespace PEngine.Models
 {
     public class BlogMetaModel
     {
-        public string Title { get; set; }
-        public string ThemeColor { get; set; }
-        public bool   UseGateway { get; set; }
-        public string Field { get; set; }
-        public string Layout { get; set; }
+        public string Title { get; set; } = "PEngine";
+        public string ThemeColor { get; set; } = "#ae009c";
+        public bool UseGateway { get; set; } = true;
+        public string Field { get; set; } = "Personal Blog";
+        public string Skin { get; set; } = "default";
     }
 }
