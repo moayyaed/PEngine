@@ -28,15 +28,15 @@ namespace PEngine.Controllers
             return RedirectToActionPermanent("Read", PostReadModel.WithId(articleId));
         }
 
-        public Task<IActionResult> List([FromQuery]PostListModel listModel, SearchRequestModel searchModel)
+        public async Task<ViewResult> List([FromQuery]PostListModel listModel, SearchRequestModel searchModel)
         {
-            throw new NotImplementedException();
+            return View();
         }
 
 
         public async Task<IActionResult> Read([FromQuery]PostModel postReadModel)
         {
-            throw new NotImplementedException();
+            return View();
         }
 
         public IActionResult Write()
@@ -47,7 +47,7 @@ namespace PEngine.Controllers
         [HttpPut]
         public async Task<bool> Write([FromBody]PostModel postModel)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
     }

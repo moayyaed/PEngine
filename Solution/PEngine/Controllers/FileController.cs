@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PEngine.Controllers
 {
-    [ApiController]
     public class FileController : Controller
     {
 
