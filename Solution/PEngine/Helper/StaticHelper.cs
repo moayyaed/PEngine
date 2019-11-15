@@ -2,6 +2,7 @@
 using PEngine.Models.Data;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,11 +16,17 @@ namespace PEngine.Helper
         {
             get
             {
-                if (MetaNeedUpdated &&
-                    BlogContextFactory.Context.Metadata.Any())
+                if (MetaNeedUpdated)
                 {
-                    meta = BlogContextFactory.Context.Metadata.First();
-                    MetaNeedUpdated = false;
+                    if (BlogContextFactory.Context.Metadata.Any())
+                    {
+                        meta = BlogContextFactory.Context.Metadata.First();
+                        MetaNeedUpdated = false;
+                    }
+                    else
+                    {
+                        meta = BlogMetaModel.DefaultStatic;
+                    }
                 }
 
                 return meta;
