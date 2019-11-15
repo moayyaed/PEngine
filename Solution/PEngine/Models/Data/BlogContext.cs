@@ -14,5 +14,17 @@ namespace PEngine.Models.Data
         public DbSet<FileModel> Files { get; set; }
         public DbSet<PostModel> Posts { get; set; }
         public DbSet<PostCategoryModel> PostCategories { get; set; }
+
+        public BlogContext()
+        {
+            Database.EnsureCreated();
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder
+                .Entity<BlogMetaModel>(mm => mm.HasNoKey())
+                .Entity<PostCategoryModel>(cm => cm.HasNoKey());
+        }
     }
 }

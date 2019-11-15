@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,36 +17,47 @@ namespace PEngine.Models.Data
         public static string        ConnectionString { get; set; }
         public static BlogContext   Context { get; set; }
 
-        public static void          Initialize(DBMSType type)
+        public static void          Initialize(IServiceCollection service, DBMSType type)
         {
             if (Context != null)
             {
                 return;
             }
 
-            Context = type switch
+            // TODO :: This code should be refactored
+            switch (type)
             {
-                DBMSType.Postgresql => new PostgresqlBlogContext(),
+                case DBMSType.Postgresql:
+                    Context = new PostgresqlBlogContext();
+                    service.AddSingleton<BlogContext, PostgresqlBlogContext>();
+                    break;
 
-                DBMSType.SQLite => new SqliteBlogContext(),
+                case DBMSType.SQLite:
+                    Context = new SqliteBlogContext();
+                    service.AddSingleton<BlogContext, SqliteBlogContext>();
+                    break;
 
-                DBMSType.SqlServer => new SqlServerBlogContext(),
+                case DBMSType.SqlServer:
+                    Context = new SqlServerBlogContext();
+                    service.AddSingleton<BlogContext, SqlServerBlogContext>();
+                    break;
 
-                _ => throw new NotImplementedException(),
-            };
+                default:
+                    throw new NotImplementedException();
+            }
         }
     }
 
     public static class IApplicationBuilderExtension
     {
-        public static IApplicationBuilder UseDatabase(this IApplicationBuilder builder, 
+        public static IServiceCollection UseDatabase(this IServiceCollection service, 
                                                         DBMSType dbmsType, 
                                                         string connectionString)
         {
             BlogContextFactory.ConnectionString = connectionString;
-            BlogContextFactory.Initialize(dbmsType);
+            BlogContextFactory.Initialize(service, dbmsType);
             
-            return builder;
+            return service;
         }
     }
 }

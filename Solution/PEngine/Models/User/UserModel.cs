@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,6 +31,8 @@ namespace PEngine.Models.User
         public string BioContent { get; set; }
 
         public string SNSListJson { get; set; }
+
+        [NotMapped]
         public List<SNSModel> SNSList => 
             JsonConvert.DeserializeObject<List<SNSModel>>(SNSListJson);
     }

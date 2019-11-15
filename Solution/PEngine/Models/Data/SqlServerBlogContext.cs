@@ -9,6 +9,6 @@ namespace PEngine.Models.Data
     public class SqlServerBlogContext : BlogContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlServer("");
+            => optionsBuilder.UseSqlServer(BlogContextFactory.ConnectionString);
     }
 }

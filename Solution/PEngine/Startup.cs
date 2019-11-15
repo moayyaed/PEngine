@@ -23,9 +23,13 @@ namespace PEngine
 
         public IConfiguration Configuration { get; }
 
-        public static void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.UseDatabase((DBMSType)Configuration.GetValue("Dbms", 0),
+                Configuration.GetValue("ConnectionString", string.Empty));
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
@@ -53,9 +57,6 @@ namespace PEngine
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            app.UseDatabase((DBMSType)Configuration.GetValue("Dbms", 0), 
-                            Configuration.GetValue("ConnectionString", string.Empty));
         }
     }
 }
