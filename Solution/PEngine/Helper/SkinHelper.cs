@@ -40,7 +40,8 @@ namespace PEngine.Helper
 
         private static Dictionary<string, string> cachedHTML = new Dictionary<string, string>();
         // Dictionary<string, string> should be replaced with custom parameter manager
-        public static string LoadHTML(string partName, Dictionary<string, string> parameters = null)
+
+        public static string LoadHTML(string partName)
         {
             string skinPartData;
 
@@ -61,6 +62,13 @@ namespace PEngine.Helper
                 skinPartData = File.ReadAllText(skinPartPath);
                 cachedHTML.Add(partName, skinPartData);
             }
+
+            return skinPartData;
+        }
+
+        public static string LoadHTML(string partName, Dictionary<string, string> parameters)
+        {
+            string skinPartData = LoadHTML(partName);
 
             if (parameters != null)
             {
