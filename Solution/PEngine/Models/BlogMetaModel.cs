@@ -14,5 +14,6 @@ namespace PEngine.Models
         public bool UseGateway { get; set; } = true;
         public string Field { get; set; } = "Personal Blog";
         public string Skin { get; set; } = "default";
+        public string Language { get; set; } = "ko";
     }
 }
