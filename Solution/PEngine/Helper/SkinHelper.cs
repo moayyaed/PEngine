@@ -75,7 +75,9 @@ namespace PEngine.Helper
                 foreach (var paramName in parameters)
                 {
                     // Performance Optimization is Required at This Place
+                    // Caching is the best?
                     skinPartData = skinPartData.Replace($"%{paramName.Key}%", paramName.Value, StringComparison.Ordinal);
+                    cachedHTML[partName] = skinPartData;
                 }
             }
 
