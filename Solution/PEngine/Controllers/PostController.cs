@@ -13,12 +13,10 @@ namespace PEngine.Controllers
     [AutoValidateAntiforgeryToken]
     public class PostController : Controller
     {
-        private ILogger      m_Logger;
-        private HtmlEncoder  m_Encoder;
+        private readonly HtmlEncoder  m_Encoder;
 
-        public PostController(ILogger _logger, HtmlEncoder _encoder)
+        public PostController(HtmlEncoder _encoder)
         {
-            m_Logger  = _logger;
             m_Encoder = _encoder;
         }
 
