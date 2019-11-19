@@ -25,6 +25,7 @@ namespace PEngine
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession();
             services.AddControllersWithViews();
 
             services.UseDatabase((DBMSType)Configuration.GetValue("Dbms", 0),
@@ -50,6 +51,7 @@ namespace PEngine
 
             app.UseRouting();
             app.UseAuthorization();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
