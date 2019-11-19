@@ -26,7 +26,7 @@ namespace PEngine.Controllers
             return RedirectToActionPermanent("Read", PostReadModel.WithId(articleId));
         }
 
-        public async Task<ViewResult> List([FromQuery]PostListModel listModel, SearchRequestModel searchModel)
+        public async Task<ViewResult> List([FromQuery]PostListRequestModel request)
         {
             return View();
         }

@@ -12,8 +12,11 @@ namespace PEngine.Models
 
         public string Title { get; set; } = "PEngine";
         public bool UseGateway { get; set; } = true;
+        public bool UseAtom { get; set; }
+        public bool UseRss { get; set; }
         public string Field { get; set; } = "Personal Blog";
         public string Skin { get; set; } = "default";
         public string Language { get; set; } = "ko";
+        public bool Installed { get; set; }
     }
 }

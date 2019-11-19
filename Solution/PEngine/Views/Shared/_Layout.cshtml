@@ -8,6 +8,16 @@
 
         <title>@ViewData["Title"] : @StaticHelper.Meta.Title</title>
 
+        @if (StaticHelper.Meta.UseRss)
+        {
+        <link rel="alternate" type="application/rss+xml" href="/Feed/RSS" title="RSS: @StaticHelper.Meta.Title" />
+        }
+
+        @if (StaticHelper.Meta.UseAtom)
+        {
+        <link rel="alternate" type="application/atom+xml" href="/Feed/Atom" title="Atom: @StaticHelper.Meta.Title" />
+        }
+
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous" />
     </head>
     <body>
