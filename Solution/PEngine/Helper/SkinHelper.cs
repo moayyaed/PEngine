@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PEngine.Helper
 {
-    public class SkinHelper
+    public static class SkinHelper
     {
         private static SkinMetaModel skinMeta;
         public static bool SkinNeedUpdated { get; set; } = true;
