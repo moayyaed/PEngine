@@ -12,6 +12,12 @@ namespace PEngine.Helper
     {
         private static SkinMetaModel skinMeta;
         public static bool SkinNeedUpdated { get; set; } = true;
+
+        private static readonly Dictionary<string, string> skinEnv =
+            new Dictionary<string, string>() { 
+                { "skinRoot", $"/Skins/{SkinMeta.Name}" } 
+            };
+
         public static SkinMetaModel SkinMeta
         {
             get
@@ -66,6 +72,11 @@ namespace PEngine.Helper
             return skinPartData;
         }
 
+        public static string LoadHead()
+        {
+            return LoadHTML("head", skinEnv);
+        }
+
         public static string LoadHTML(string partName, Dictionary<string, string> parameters)
         {
             string skinPartData = LoadHTML(partName);
@@ -76,7 +87,7 @@ namespace PEngine.Helper
                 {
                     // Performance Optimization is Required at This Place
                     // Caching is the best?
-                    skinPartData = skinPartData.Replace($"%{paramName.Key}%", paramName.Value, StringComparison.Ordinal);
+                    skinPartData = skinPartData.Replace($"@{paramName.Key}", paramName.Value, StringComparison.Ordinal);
                     cachedHTML[partName] = skinPartData;
                 }
             }
