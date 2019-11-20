@@ -12,9 +12,8 @@ namespace PEngine.Controllers
     public class HomeController : Controller
     {
         private readonly ISession session;
-        private readonly BlogContext context;
         
-        public HomeController(BlogContext _context, IHttpContextAccessor _accessor)
+        public HomeController(IHttpContextAccessor _accessor)
         {
             session = _accessor.HttpContext.Session;
         }
