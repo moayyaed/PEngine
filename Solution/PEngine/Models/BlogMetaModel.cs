@@ -19,7 +19,7 @@ namespace PEngine.Models
         public string Language { get; set; } = "ko";
         public bool UseImageResize { get; set; } = true;
         public int ImageResizeWidth { get; set; } = 300;
-        public bool UseImageWatermark { get; set; } = true;
+        public bool UseImageWatermark { get; set; }
         public int WatermarkPosition { get; set; }
         public string WatermarkImageId { get; set; }
         public double WatermarkOpaque { get; set; } = 0.5;
