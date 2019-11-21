@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -27,9 +28,11 @@ namespace PEngine
         {
             services.AddSession();
             services.AddControllersWithViews();
-            services.AddAuthentication()
-                    .AddCookie(options => 
-                        options.LoginPath = new PathString("/User/Login"));
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie(options => {
+                        options.LoginPath = new PathString("/User/Login");
+                        options.LogoutPath = new PathString("/User/Logout");
+                    });
 
             services.UseDatabase((DBMSType)Configuration.GetValue("Dbms", 0),
                 Configuration.GetValue("ConnectionString", string.Empty));
