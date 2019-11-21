@@ -12,6 +12,7 @@ namespace PEngine.Helper
     {
         private static BlogMetaModel meta;
         public static bool MetaNeedUpdated { get; set; } = true;
+        public static bool MetaValid => Meta != BlogMetaModel.DefaultStatic;
         public static BlogMetaModel Meta 
         {
             get

@@ -27,6 +27,9 @@ namespace PEngine
         {
             services.AddSession();
             services.AddControllersWithViews();
+            services.AddAuthentication()
+                    .AddCookie(options => 
+                        options.LoginPath = new PathString("/User/Login"));
 
             services.UseDatabase((DBMSType)Configuration.GetValue("Dbms", 0),
                 Configuration.GetValue("ConnectionString", string.Empty));
@@ -55,9 +58,19 @@ namespace PEngine
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                if (string.IsNullOrEmpty(BlogContextFactory.ConnectionString))
+                {
+                    endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "Install/{action=Index}/{id?}"
+                        );
+                }
+                else
+                {
+                    endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=Home}/{action=Index}/{id?}");
+                }
             });
         }
     }
