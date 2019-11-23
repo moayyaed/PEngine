@@ -1,0 +1,23 @@
+﻿*{margin: 0; padding: 0}
+
+header {
+    height: 50px;
+    padding: 12px 20px;
+}
+
+header * {
+    float: left;
+    vertical-align: top;
+    margin: 0 10px;
+    height: 50px;
+    font-size: 40px;
+}
+
+#installerBody {
+    padding: 15px 20px;
+}
+
+footer {
+    padding: 12px 20px;
+    font-size: 8pt;
+}
