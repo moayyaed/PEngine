@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PEngine.Models.Data;
+using PEngine.Models.Feed;
 
 namespace PEngine.Controllers
 {
@@ -23,14 +24,14 @@ namespace PEngine.Controllers
                 return NoContent();
 
             var postList = BlogContextFactory.Context.Posts
-                               .Select(post => new
+                               .Select(post => new FeedEntityModel
                                {
-                                   post.Id,
-                                   post.Title,
-                                   updatedAt = post.ModifiedAt == DateTime.MinValue ? post.WrittenAt : post.ModifiedAt,
-                                   summary = post.Content.Take(256)
+                                   Id = post.Id,
+                                   Title = post.Title,
+                                   UpdatedAt = post.ModifiedAt == DateTime.MinValue ? post.WrittenAt : post.ModifiedAt,
+                                   Summary = post.Content.Take(256).ToString()
                                })
-                               .OrderByDescending(post => post.updatedAt)
+                               .OrderByDescending(post => post.UpdatedAt)
                                .ToList();
 
             return View(feedType, postList);
