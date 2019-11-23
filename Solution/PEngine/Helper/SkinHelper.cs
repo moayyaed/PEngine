@@ -13,6 +13,8 @@ namespace PEngine.Helper
         private static SkinMetaModel skinMeta;
         public static bool SkinNeedUpdated { get; set; } = true;
 
+        private static Dictionary<string, string> cachedHTML = new Dictionary<string, string>();
+
         private static readonly Dictionary<string, string> skinEnv =
             new Dictionary<string, string> { 
                 { "skinRoot", $"/Skins/{SkinMeta.Name}" } 
@@ -44,7 +46,7 @@ namespace PEngine.Helper
             }
         }
 
-        private static Dictionary<string, string> cachedHTML = new Dictionary<string, string>();
+
         // Dictionary<string, string> should be replaced with custom parameter manager
 
         public static string LoadHTML(string partName)
