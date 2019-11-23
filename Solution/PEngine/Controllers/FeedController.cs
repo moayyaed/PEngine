@@ -14,7 +14,9 @@ namespace PEngine.Controllers
         public FeedController(IHttpContextAccessor context)
         {
             if (context != null)
+            {
                 context.HttpContext.Response.ContentType = "application/xml";
+            }
         }
 
         [Route("/Feed/{feedType}")]
