@@ -15,7 +15,7 @@ namespace PEngine.Models.Data
         public DbSet<PostModel> Posts { get; set; }
         public DbSet<PostCategoryModel> PostCategories { get; set; }
 
-        public BlogContext()
+        protected BlogContext()
         {
             Database.EnsureCreated();
         }
