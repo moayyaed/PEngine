@@ -27,7 +27,15 @@ namespace PEngine
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSession();
+
+
+#if (DEBUG)
+            var mvcService = services.AddControllersWithViews();
+            mvcService.AddRazorRuntimeCompilation();
+#else
             services.AddControllersWithViews();
+#endif
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                     .AddCookie(options => {
                         options.LoginPath = new PathString("/User/Login");
