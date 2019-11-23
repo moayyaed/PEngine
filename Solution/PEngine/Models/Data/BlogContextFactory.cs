@@ -57,8 +57,10 @@ namespace PEngine.Models.Data
             BlogContextFactory.ConnectionString = connectionString;
 
             if (!string.IsNullOrEmpty(connectionString))
+            {
                 BlogContextFactory.Initialize(service, dbmsType);
-            
+            }
+
             return service;
         }
     }
