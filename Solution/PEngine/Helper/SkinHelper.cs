@@ -14,7 +14,7 @@ namespace PEngine.Helper
         public static bool SkinNeedUpdated { get; set; } = true;
 
         private static readonly Dictionary<string, string> skinEnv =
-            new Dictionary<string, string>() { 
+            new Dictionary<string, string> { 
                 { "skinRoot", $"/Skins/{SkinMeta.Name}" } 
             };
 
