@@ -10,12 +10,9 @@ namespace PEngine.Controllers
 {
     public class InstallController : Controller
     {
-        public InstallController(BlogContext context)
+        public InstallController()
         {
-            if (!StaticHelper.MetaValid)
-            {
-                
-            }
+
         }
 
         public IActionResult Index()
