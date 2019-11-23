@@ -69,19 +69,9 @@ namespace PEngine
 
             app.UseEndpoints(endpoints =>
             {
-                if (string.IsNullOrEmpty(BlogContextFactory.ConnectionString))
-                {
-                    endpoints.MapControllerRoute(
-                        name: "default",
-                        pattern: "Install/{action=Index}/{id?}"
-                        );
-                }
-                else
-                {
-                    endpoints.MapControllerRoute(
-                        name: "default",
-                        pattern: "{controller=Home}/{action=Index}/{id?}");
-                }
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
