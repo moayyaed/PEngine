@@ -20,19 +20,12 @@ namespace PEngine.Controllers
             m_Encoder = _encoder;
         }
 
-        [HttpGet("/{id}")]
-        public IActionResult Index(long articleId)
-        {
-            return RedirectToActionPermanent("Read", PostReadModel.WithId(articleId));
-        }
-
         public async Task<ViewResult> List([FromQuery]PostListRequestModel request)
         {
             return View();
         }
 
-
-        public async Task<IActionResult> Read([FromQuery]PostModel postReadModel)
+        public async Task<IActionResult> Read([FromQuery]PostReadModel model)
         {
             return View();
         }
