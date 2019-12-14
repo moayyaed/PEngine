@@ -17,7 +17,6 @@ namespace PEngine.Models.User
         public bool IsEmailOpened { get; set; }
 
         public string Username { get; set; }
-        public string Password { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime LastLoggedAt { get; set; }
