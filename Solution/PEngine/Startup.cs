@@ -63,7 +63,7 @@ namespace PEngine
             
             if (string.IsNullOrEmpty(connectionString))
             {
-                throw new ArgumentNullException("Connection string must be specified");
+                throw new ArgumentNullException("ConnectionString must be specified");
             }
 
             services.UseDatabase(dbms, connectionString);
