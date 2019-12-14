@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using PEngine.Models.Data;
+using PEngine.Models.User;
 
 namespace PEngine
 {
@@ -26,46 +28,65 @@ namespace PEngine
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSession();
-
-
+            /*
+             * Enable Runtime Compilation
+             * Well, It seems that ASP.NET Core no longer support
+             * runtime view compilation from 3.x,
+             * So I had to add RazorRuntimeCompilation Package from NuGet.
+             *
+             * However, This feature will not be activated in Release Build.
+             */
 #if (DEBUG)
-            var mvcService = services.AddControllersWithViews();
-            mvcService.AddRazorRuntimeCompilation();
+            services.AddControllersWithViews()
+                    .AddRazorRuntimeCompilation();
 #else
             services.AddControllersWithViews();
 #endif
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                    .AddCookie(options => {
-                        options.LoginPath = new PathString("/User/Login");
-                        options.LogoutPath = new PathString("/User/Logout");
-                    });
+            // Authentication
+            services.AddIdentity<UserModel, IdentityRole>(
+                    options =>
+                    {
+                        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                        options.Lockout.MaxFailedAccessAttempts = 3;
 
-            services.UseDatabase((DBMSType)Configuration.GetValue("Dbms", 0),
-                Configuration.GetValue("ConnectionString", string.Empty));
+                        options.User.RequireUniqueEmail = true;
 
+                        options.Password.RequiredLength = 8;
+                    }
+                ).AddEntityFrameworkStores<BlogContext>();
+                
+
+            // Load DB Connection String from appsettings.json
+            var dbms = (DBMSType) Configuration.GetValue("Dbms", 0);
+            var connectionString = Configuration.GetConnectionString("Database"); 
+            
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new ArgumentNullException("Connection string must be specified");
+            }
+
+            services.UseDatabase(dbms, connectionString);
+
+            // Configure DI Containers
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                app.UseHsts();
-            }
+#if (DEBUG)
+            app.UseDeveloperExceptionPage();
+#else
+            app.UseExceptionHandler("/Error");
+            app.UseHsts();
+#endif
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            app.UseHttpsRedirection()
+               .UseStaticFiles()
+               .UseRouting();
 
-            app.UseRouting();
-            app.UseAuthorization();
-            app.UseSession();
+            app.UseSession()
+               .UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
