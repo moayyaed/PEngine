@@ -11,9 +11,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using Org.BouncyCastle.Security;
 using PEngine.Models.Data;
 using PEngine.Models.User;
+using PEngine.Modules.Database;
 
 namespace PEngine
 {
@@ -54,7 +55,7 @@ namespace PEngine
 
                         options.Password.RequiredLength = 8;
                     }
-                ).AddEntityFrameworkStores<BlogContext>();
+                ).AddEntityFrameworkStores<BlogDbContext>();
                 
 
             // Load DB Connection String from appsettings.json
@@ -63,7 +64,7 @@ namespace PEngine
             
             if (string.IsNullOrEmpty(connectionString))
             {
-                throw new ArgumentNullException("ConnectionString must be specified");
+                throw new InvalidKeyException("ConnectionString must be specified");
             }
 
             services.UseDatabase(dbms, connectionString);
