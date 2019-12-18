@@ -1,32 +1,16 @@
 ﻿<!DOCTYPE html>
 
-<html lang="@StaticHelper.Meta.Language">
+<html lang="">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width" />
-        <meta name="theme-color" content="@SkinHelper.SkinMeta.Color" />
+        <meta name="theme-color" content="" />
 
-        <title>@ViewData["Title"] : @StaticHelper.Meta.Title</title>
-
-        @if (StaticHelper.Meta.UseRss)
-        {
-        <link rel="alternate" type="application/rss+xml" href="/Feed/RSS" title="RSS: @StaticHelper.Meta.Title" />
-        }
-        @if (StaticHelper.Meta.UseAtom)
-        {
-        <link rel="alternate" type="application/atom+xml" href="/Feed/Atom" title="Atom: @StaticHelper.Meta.Title" />
-        }
-
-        @Html.Raw(SkinHelper.LoadHead())
+        <title>@ViewData["Title"]</title>
+        
     </head>
     <body>
-        @Html.Raw(SkinHelper.LoadHTML("header"))
-
-        <div class="contents">
-            @RenderBody()
-        </div>
-
-        @Html.Raw(SkinHelper.LoadHTML("footer"))
+        @RenderBody()
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>

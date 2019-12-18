@@ -30,20 +30,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers" />
     <Folder Include="Filters\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Skins\default\footer.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Skins\default\head.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Skins\default\header.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <_ContentIncludedByDefault Remove="Views\Feed\Atom.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Feed\RSS.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Home\Gateway.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Install\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Post\List.cshtml" />
   </ItemGroup>
 
 </Project>

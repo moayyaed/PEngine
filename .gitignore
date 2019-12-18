@@ -1,5 +1,7 @@
 bin
 obj
+
+.idea
 .vs
 
 Solution/PEngine/wwwroot/lib
