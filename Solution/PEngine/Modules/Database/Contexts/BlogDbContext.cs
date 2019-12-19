@@ -4,7 +4,7 @@ namespace PEngine.Modules.Database
 {
     public abstract class BlogDbContext : DbContext
     {
-        protected BlogContext()	
+        protected BlogDbContext()	
         {	
             Database.EnsureCreated();	
         }	

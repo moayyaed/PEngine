@@ -5,6 +5,6 @@ namespace PEngine.Modules.Database
     public class SqliteDbContext : BlogDbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlite("");
+            => optionsBuilder.UseSqlite(this.LoadConnectionString());
     }
 }

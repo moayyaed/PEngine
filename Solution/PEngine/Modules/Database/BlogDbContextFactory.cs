@@ -38,6 +38,11 @@ namespace PEngine.Modules.Database
             }
         }
 
+        public static string LoadConnectionString(this BlogDbContext context)
+        {
+            return ConnectionString;
+        }
+        
         public static IServiceCollection UseDatabase(this IServiceCollection service,
             DBMSType dbmsType,
             string connectionString)
