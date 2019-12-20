@@ -1,6 +1,6 @@
 using System;
 
-namespace PEngine.Models
+namespace PEngine.Common.Models
 {
     public class ErrorViewModel
     {

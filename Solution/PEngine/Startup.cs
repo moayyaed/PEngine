@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -8,13 +9,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Org.BouncyCastle.Security;
-using PEngine.Models.Data;
-using PEngine.Models.User;
-using PEngine.Modules.Database;
+using PEngine.Common.Components;
 
 namespace PEngine
 {
@@ -43,8 +43,18 @@ namespace PEngine
 #else
             services.AddControllersWithViews();
 #endif
+            
+            /*
+             * Configure Razor View Engine
+             * - ViewLocationExpanders (Refer PEngineViewLocationExpander)
+             */
+            services.Configure<RazorViewEngineOptions>(options =>
+            {
+                options.ViewLocationExpanders.Add(new PEngineViewLocationExpander());
+            });
 
             // Authentication
+            /*
             services.AddIdentity<UserModel, IdentityRole>(
                     options =>
                     {
@@ -56,7 +66,7 @@ namespace PEngine
                         options.Password.RequiredLength = 8;
                     }
                 ).AddEntityFrameworkStores<BlogDbContext>();
-                
+             
 
             // Load DB Connection String from appsettings.json
             var dbms = (DBMSType) Configuration.GetValue("Dbms", 0);
@@ -64,11 +74,12 @@ namespace PEngine
             
             if (string.IsNullOrEmpty(connectionString))
             {
-                throw new InvalidKeyException("ConnectionString must be specified");
+                throw new InvalidDataException("ConnectionString must be specified");
             }
 
             services.UseDatabase(dbms, connectionString);
-
+            */ 
+            
             // Configure DI Containers
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
@@ -83,14 +94,18 @@ namespace PEngine
 #endif
 
             app.UseHttpsRedirection()
-               .UseStaticFiles()
+               .UseStaticFiles("/Static")
                .UseRouting();
 
-            app.UseSession()
-               .UseAuthentication();
+//            app.UseSession()
+//               .UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "Admin",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

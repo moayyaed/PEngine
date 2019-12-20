@@ -31,9 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Modules\Controllers\Blog" />
-    <Folder Include="Modules\Controllers\Admin" />
-    <Folder Include="wwwroot\" />
+    <Folder Include="Static\" />
   </ItemGroup>
 
   <ItemGroup>

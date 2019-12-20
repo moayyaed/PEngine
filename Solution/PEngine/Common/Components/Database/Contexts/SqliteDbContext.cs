@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace PEngine.Modules.Database
+namespace PEngine.Common.Components.Database.Contexts
 {
     public class SqliteDbContext : BlogDbContext
     {

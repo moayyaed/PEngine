@@ -1,7 +1,8 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using PEngine.Common.Components.Database.Contexts;
 
-namespace PEngine.Modules.Database
+namespace PEngine.Common.Components.Database
 {
     public enum DBMSType	
     {	
