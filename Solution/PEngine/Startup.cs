@@ -13,8 +13,10 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Org.BouncyCastle.Security;
 using PEngine.Common.Components;
+using PEngine.Common.Components.Database;
+using PEngine.Common.Components.Database.Contexts;
+using PEngine.Common.Models.Schema;
 
 namespace PEngine
 {
@@ -54,7 +56,7 @@ namespace PEngine
             });
 
             // Authentication
-            /*
+            services.AddSession();
             services.AddIdentity<UserModel, IdentityRole>(
                     options =>
                     {
@@ -78,8 +80,7 @@ namespace PEngine
             }
 
             services.UseDatabase(dbms, connectionString);
-            */ 
-            
+
             // Configure DI Containers
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
@@ -97,14 +98,15 @@ namespace PEngine
                .UseStaticFiles("/Static")
                .UseRouting();
 
-//            app.UseSession()
-//               .UseAuthentication();
+            app.UseSession()
+               .UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "Admin",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                    );
                 
                 endpoints.MapControllerRoute(
                     name: "default",
