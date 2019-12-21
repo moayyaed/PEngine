@@ -21,6 +21,11 @@ PEngine is a content management system (CMS) for maximizing personal blogging ex
 |------------|---|
 | CodeFactor | [![CodeFactor](https://www.codefactor.io/repository/github/0x00000ff/pengine/badge/master)](https://www.codefactor.io/repository/github/0x00000ff/pengine/overview/master)  |
 
+## Supported Database
+ * Microsoft SQL Server
+ * MySQL/MariaDB
+ * PostgreSQL
+
 ## How to Build
 
  * Install [.NET Core 3.0 SDK](https://dotnet.microsoft.com/download)
