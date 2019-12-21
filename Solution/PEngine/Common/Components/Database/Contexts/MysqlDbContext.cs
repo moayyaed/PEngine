@@ -5,6 +5,6 @@ namespace PEngine.Common.Components.Database.Contexts
     public class MysqlDbContext : BlogDbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)	
-            => optionsBuilder.UseMySQL(this.LoadConnectionString());
+            => optionsBuilder.UseMySql(this.LoadConnectionString());
     }
 }
