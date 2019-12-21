@@ -6,7 +6,7 @@ namespace PEngine.Common.Components.Database
 {
     public enum DBMSType	
     {	
-        SqlServer = 0, Postgresql = 1, MySQL = 2, SQLite = 3	
+        SqlServer = 0, Postgresql = 1, MySql = 2, SQLite = 3	
     }
 
     public static class BlogDbContextInitializer
@@ -22,7 +22,7 @@ namespace PEngine.Common.Components.Database
                     service.AddSingleton<BlogDbContext, PostgresqlDbContext>();
                     break;
 
-                case DBMSType.MySQL:
+                case DBMSType.MySql:
                     service.AddSingleton<BlogDbContext, MysqlDbContext>();
                     break;
 
