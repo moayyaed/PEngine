@@ -11,6 +11,7 @@ namespace PEngine.Common.Components
             var customLocations = new []
             {
                 "/Modules/{2}/Views/{1}/{0}.cshtml",
+                "/Modules/{2}/Views/Shared/{0}.cshtml",
                 "/Common/Views/Shared/{0}.cshtml"
             };
             
