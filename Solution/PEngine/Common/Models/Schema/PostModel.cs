@@ -24,6 +24,10 @@ namespace PEngine.Common.Models.Schema
         
         public long ReadCount { get; set; }
         
+        public bool Private { get; set; }
+        public bool Protected { get; set; }
+        public string ProtectPassword { get; set; }
+        
         public string Tags { get; set; }
 
         public string[] GetTagList()
