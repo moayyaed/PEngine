@@ -17,7 +17,6 @@ namespace PEngine.Modules.Blog.Controllers
     public class FileController : Controller
     {
         private BlogDbContext m_db;
-        private DbSet<FileModel> m_files;
 
         public FileController(BlogDbContext db)
         {
