@@ -21,23 +21,27 @@ namespace PEngine.Modules.Blog.Controllers
         }
 
         [HttpGet("/Blog/File/{fileGuid}")]
-        public async Task<FileResult> Download(Guid fileGuid)
+        public async Task<ActionResult> Download(Guid fileGuid)
         {
             if (fileGuid == default)
             {
-                return null;
+                return StatusCode(400);
             }
             
-            var file = await m_files.FirstOrDefaultAsync(f => f.Id == fileGuid);
-
             try
             {
+                var file = await m_files.FirstOrDefaultAsync(f => f.Id == fileGuid);
+
                 using var fileStream = SysFile.OpenRead(file.ActualPath);
                 return File(fileStream, file.ContentType);
             }
+            catch (FileNotFoundException)
+            {
+                return StatusCode(404);
+            }
             catch (IOException)
             {
-                return null;
+                return StatusCode(500);
             }
         }
     }
