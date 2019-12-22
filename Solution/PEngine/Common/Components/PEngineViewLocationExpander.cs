@@ -5,7 +5,7 @@ namespace PEngine.Common.Components
 {
     public class PEngineViewLocationExpander : IViewLocationExpander
     {
-        public IEnumerable<string> ExpandViewLocations(
+        public static IEnumerable<string> ExpandViewLocations(
             ViewLocationExpanderContext context, IEnumerable<string> viewLocations)
         {
             var customLocations = new []
@@ -18,7 +18,7 @@ namespace PEngine.Common.Components
             return customLocations;
         }
 
-        public void PopulateValues(ViewLocationExpanderContext context)
+        public static void PopulateValues(ViewLocationExpanderContext context)
         {
             context.Values["PEngineViewLocation"] = nameof(PEngineViewLocationExpander);
         }
