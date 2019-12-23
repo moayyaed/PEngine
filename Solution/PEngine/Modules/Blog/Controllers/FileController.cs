@@ -62,7 +62,7 @@ namespace PEngine.Modules.Blog.Controllers
                         Filename = file.FileName,
                         ContentType = file.ContentType,
                         Filesize = file.Length,
-                        ActualPath = FileModel.CreateRandomPath() // Actual Path Creating Algorithm?
+                        ActualPath = "~/Repositories/Attachments/" + Path.GetRandomFileName() // is it ideal?
                     });
 
                 if (newFile.State == EntityState.Added)
