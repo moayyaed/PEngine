@@ -11,6 +11,8 @@ namespace PEngine.Test
         {
             var cases = new Dictionary<string, string>
             {
+                {string.Empty, string.Empty},
+                {" ", "36a9e7f1c95b82ffb99743e0c5c4ce95d83c9a430aac59f84ef3cbfab6145068"},
                 {"abcdefghijklmnopqrstuvwxyz", "71c480df93d6ae2f1efad1447c66c9525e316218cf51fc8d9ed832f2daf18b73"},
                 {"01234567890", "ee29eb4a8725678278ac439cf7abfd2a849cdc7378a6b6316017b81c51d720e7"},
                 {"CfZ9C*?rx@7Rb!UK", "01804bcdc08b704bb22e6a3082451bfa93454782c5e5b2260fa3c44fc3e447ec"},
