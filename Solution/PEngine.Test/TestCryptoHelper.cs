@@ -17,7 +17,9 @@ namespace PEngine.Test
                 {"01234567890", "ee29eb4a8725678278ac439cf7abfd2a849cdc7378a6b6316017b81c51d720e7"},
                 {"CfZ9C*?rx@7Rb!UK", "01804bcdc08b704bb22e6a3082451bfa93454782c5e5b2260fa3c44fc3e447ec"},
                 {"Q7x6^&5uA%yu^-wG", "95304c530ad3fa1f00b7068ce9ad0144058c327694942178ccd06cf096581ee4"},
-                {"Z8F8jLX+QhaahsXW", "d959b45886bfc540b8a82a8a614c1bd59e6998002d6f14927902ffa43bb866c7"}
+                {"Z8F8jLX+QhaahsXW", "d959b45886bfc540b8a82a8a614c1bd59e6998002d6f14927902ffa43bb866c7"},
+                {"ypcmpBvJ5m", "0c54ce4f092909f8c121a90d8dea325730256b7d88df5d67324d6220de744f79"},
+                {"BoivAZGT3q", "7d3026a9c9e74ee37b5a58cbf36e67296966373ae7ad57eb3430f6d73710cf4d"}
             };
 
             foreach (var testCase in cases)
