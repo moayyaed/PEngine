@@ -28,7 +28,7 @@ namespace PEngine.Modules.Blog.Controllers
         {
             if (fileGuid == default)
             {
-                return StatusCode(400);
+                return BadRequest();
             }
             
             try
@@ -40,7 +40,7 @@ namespace PEngine.Modules.Blog.Controllers
             }
             catch (FileNotFoundException)
             {
-                return StatusCode(404);
+                return NotFound();
             }
             catch (IOException)
             {

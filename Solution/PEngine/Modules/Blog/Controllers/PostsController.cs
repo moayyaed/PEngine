@@ -60,7 +60,7 @@ namespace PEngine.Modules.Blog.Controllers
             if (post is null ||
                 (User is null && post.Private))
             {
-                return StatusCode(404);
+                return NotFound();
             }
             
             if (post.Protected)
@@ -82,7 +82,7 @@ namespace PEngine.Modules.Blog.Controllers
 
             if (post is null)
             {
-                return StatusCode(404);
+                return NotFound();
             }
 
             return View(post);
