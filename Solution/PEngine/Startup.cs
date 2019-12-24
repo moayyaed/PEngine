@@ -88,6 +88,8 @@ namespace PEngine
             app.UseHsts();
 #endif
 
+            app.UseStatusCodePagesWithReExecute("/Error/{0}");
+
             app.UseHttpsRedirection()
                .UseStaticFiles("/Static")
                .UseRouting();
