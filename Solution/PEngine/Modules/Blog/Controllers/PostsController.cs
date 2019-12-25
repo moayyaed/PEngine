@@ -90,12 +90,18 @@ namespace PEngine.Modules.Blog.Controllers
 
         [LoginRequired]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Write([FromBody] PostWriteRequestModel model)
+        public async Task<JsonResult> Write([FromBody] PostWriteRequestModel model)
         {
             var postToCreate = model.CreatePostModel();
+            var addResult = await m_db.Posts.AddAsync(postToCreate);
 
-            await m_db.Posts.AddAsync(postToCreate);
+            // TODO: define write result model that contains post id to redirect
+            if (addResult.State == EntityState.Added)
+            {
+                return Json(new { success = true, postId = addResult.Entity.Id });
+            }
 
+            return Json(new {success = false});
         }
     }
 }
