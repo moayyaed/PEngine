@@ -20,27 +20,24 @@ namespace PEngine.Modules.Blog.Controllers
             m_db = db;
         }
 
-        public async Task<ViewResult> List(string searchQuery, int page)
+        public async Task<ViewResult> List(string searchKeyword, int page)
         {
-            var postList = m_db.Posts.Select(post => new PostListViewModel());
+            var keyword = searchKeyword ?? "";
+            var showPrivate = User.Identity.IsAuthenticated;
+            var pageNo = page <= 0 ? 1 : page;
+            
+            var postList = m_db.Posts.Select(post => post);
 
-            if (User is null)
+            if (!User.Identity.IsAuthenticated)
             {
                 postList = postList.Where(post => !post.Private);
             }
 
             // Should be refactored with advanced searching algorithms
-            if (searchQuery is null)
-            {
-                searchQuery = "";
-            }
-            
-            if (page <= 0)
-            {
-                page = 1;
-            }
 
-            postList = postList.Where(post => post.Title.Contains(searchQuery) || post.Content.Contains(searchQuery));
+            postList = postList.Where(post => post.Title.Contains(keyword) 
+                                              || post.Content.Contains(keyword));
+
             return View(await postList.ToListAsync());
         }
 
@@ -51,7 +48,7 @@ namespace PEngine.Modules.Blog.Controllers
             var post = await m_db.Posts.FirstOrDefaultAsync(post => post.Id == id);
 
             if (post is null ||
-                (User is null && post.Private))
+                (!User.Identity.IsAuthenticated && post.Private))
             {
                 return NotFound();
             }

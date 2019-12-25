@@ -12,7 +12,7 @@ namespace PEngine.Common.Components.Filters
         {
             currentController = context.Controller as Controller;
             
-            if (currentController?.User is null)
+            if (currentController?.User.Identity.IsAuthenticated == false)
             {
                 context.Result = new RedirectResult("/Member/Auth/Login");
             }
