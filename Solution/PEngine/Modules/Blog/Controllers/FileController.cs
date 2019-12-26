@@ -16,7 +16,7 @@ namespace PEngine.Modules.Blog.Controllers
     [Area("Blog")]
     public class FileController : Controller
     {
-        private BlogDbContext m_db;
+        private readonly BlogDbContext m_db;
 
         public FileController(BlogDbContext db)
         {

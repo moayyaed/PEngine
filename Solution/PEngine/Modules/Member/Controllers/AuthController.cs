@@ -9,8 +9,8 @@ namespace PEngine.Modules.Member.Controllers
     [Area("Member")]
     public class AuthController : Controller
     {
-        private SignInManager<UserModel> m_siManager;
-        private UserManager<UserModel> m_uiManager;
+        private readonly SignInManager<UserModel> m_siManager;
+        private readonly UserManager<UserModel> m_uiManager;
         
         public AuthController(SignInManager<UserModel> siManager, UserManager<UserModel> uiManager)
         {
@@ -29,21 +29,21 @@ namespace PEngine.Modules.Member.Controllers
         {
             var result = await m_siManager.PasswordSignInAsync(email, 
                                                     password, false, true);
-
+            var redirectLocation = redirectTo ?? "/";
+            
             if (result.Succeeded)
             {
                 var user = await m_uiManager.GetUserAsync(User);
                 user.LastLogin = DateTime.Now;
 
-                if (string.IsNullOrEmpty(redirectTo))
-                {
-                    redirectTo = "/";
-                }
-                
-                return Redirect(redirectTo);
+                return Redirect(redirectLocation);
+            }
+            else if (result.IsLockedOut)
+            {
+                return RedirectToAction("LockedOut");
             }
 
-            return result.IsLockedOut ? RedirectToAction("LockedOut") : RedirectToAction();
+            return View();
         }
 
         public ActionResult LockedOut()

@@ -13,7 +13,7 @@ namespace PEngine.Modules.Blog.Controllers
     [Area("Blog")]
     public class PostsController : Controller
     {
-        private BlogDbContext m_db;
+        private readonly BlogDbContext m_db;
 
         public PostsController(BlogDbContext db)
         {
