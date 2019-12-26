@@ -29,14 +29,14 @@ namespace PEngine.Modules.Blog.Controllers
             
             // Should be refactored with advanced searching algorithms
             var postQuery = m_db.Posts.Where(post => post.Title.Contains(keyword) 
-                                                     || post.Content.Contains(keyword));;
+                                                     || post.Content.Contains(keyword));
 
             if (!showPrivate)
             {
                 postQuery = postQuery.Where(post => post.Private == false);
             }
 
-            postQuery = postQuery.Skip(10 * page)
+            postQuery = postQuery.Skip(10 * pageNo)
                                  .Take(10);
 
             var postList = postQuery.Select(post => PostListViewModel.Project(post))

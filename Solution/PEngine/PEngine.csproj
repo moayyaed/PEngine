@@ -32,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Modules\Admin\Views" />
     <Folder Include="Modules\Member\Views\Shared" />
     <Folder Include="Static\" />
   </ItemGroup>
