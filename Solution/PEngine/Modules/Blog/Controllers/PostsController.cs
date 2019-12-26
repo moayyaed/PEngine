@@ -25,20 +25,23 @@ namespace PEngine.Modules.Blog.Controllers
             var keyword = searchKeyword ?? "";
             var showPrivate = User.Identity.IsAuthenticated;
             var pageNo = page <= 0 ? 1 : page;
-            
-            var postList = m_db.Posts.Select(post => post);
 
-            if (!User.Identity.IsAuthenticated)
+            
+            // Should be refactored with advanced searching algorithms
+            var postQuery = m_db.Posts.Where(post => post.Title.Contains(keyword) 
+                                                     || post.Content.Contains(keyword));;
+
+            if (!showPrivate)
             {
-                postList = postList.Where(post => !post.Private);
+                postQuery = postQuery.Where(post => post.Private == false);
             }
 
-            // Should be refactored with advanced searching algorithms
+            postQuery = postQuery.Skip(10 * page)
+                                 .Take(10);
 
-            postList = postList.Where(post => post.Title.Contains(keyword) 
-                                              || post.Content.Contains(keyword));
-
-            return View(await postList.ToListAsync());
+            var postList = postQuery.Select(post => PostListViewModel.Project(post))
+                .ToList();
+            return View(postList);
         }
 
         [HttpGet("/Posts/{id}")]
