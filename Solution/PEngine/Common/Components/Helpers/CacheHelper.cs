@@ -4,7 +4,7 @@ using HeyRed.MarkdownSharp;
 
 namespace PEngine.Common.Components.Helpers
 {
-    public class CacheHelper
+    public static class CacheHelper
     {
         public static string CachePost(string contentType, string content)
         {
