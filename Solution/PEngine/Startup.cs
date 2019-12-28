@@ -79,7 +79,7 @@ namespace PEngine
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
-        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public static void Configure(IApplicationBuilder app)
         {
 #if (DEBUG)
             app.UseDeveloperExceptionPage();
