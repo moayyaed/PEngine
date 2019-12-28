@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -48,7 +49,8 @@ namespace PEngine.Modules.Blog.Controllers
         [HttpGet("/Blog/Posts/Read/{id}")]
         public async Task<ActionResult> Read(int id)
         {
-            var post = await m_db.Posts.FirstOrDefaultAsync(post => post.Id == id);
+            var post = await m_db.Posts.FirstOrDefaultAsync(post => post.Id == id)
+                                       .ConfigureAwait(false);
 
             if (post is null ||
                 (!User.Identity.IsAuthenticated && post.Private))
@@ -60,6 +62,8 @@ namespace PEngine.Modules.Blog.Controllers
             {
                 // TODO: Should be replaced with "protected" message
                 post.Content = string.Empty;
+
+                return View("PostProtected", post);
             }
             
             return View(post);
@@ -71,8 +75,9 @@ namespace PEngine.Modules.Blog.Controllers
         public async Task<ActionResult> ReadProtected(int id, string password)
         {
             var passwordHash = CryptoHelper.Sha256(password);
-            var post = await m_db.Posts.FirstOrDefaultAsync(post => post.Id == id 
-                                                                    && post.ProtectPassword == passwordHash);
+            var post = await m_db.Posts.FirstOrDefaultAsync(_post => _post.Id == id 
+                                                                    && _post.ProtectPassword == passwordHash)
+                .ConfigureAwait(false);
 
             if (post is null)
             {
@@ -83,8 +88,13 @@ namespace PEngine.Modules.Blog.Controllers
         }
 
         [LoginRequired]
-        public async Task<ActionResult> Write()
+        public async Task<ActionResult> Write(long? postId)
         {
+            if (postId != null)
+            {
+                
+            }
+            
             return View();
         }
 
@@ -93,15 +103,58 @@ namespace PEngine.Modules.Blog.Controllers
         public async Task<JsonResult> Write([FromBody] PostWriteRequestModel model)
         {
             var postToCreate = model.CreatePostModel();
+            
+            // TODO: set identity info to post
+            
             var addResult = await m_db.Posts.AddAsync(postToCreate);
+            var result = new PostResultModel();
 
             // TODO: define write result model that contains post id to redirect
             if (addResult.State == EntityState.Added)
             {
-                return Json(new { success = true, postId = addResult.Entity.Id });
+                result.Success = true;
+                result.PostId = addResult.Entity.Id;
+                
+                await m_db.SaveChangesAsync()
+                          .ConfigureAwait(false);
             }
 
-            return Json(new {success = false});
+            return Json(result);
+        }
+
+        [LoginRequired]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> Modify(long postId, PostWriteRequestModel model)
+        {
+            var result = new PostResultModel();
+            var post = m_db.Posts.FirstOrDefault(post => post.Id == postId);
+
+            // TODO: If there is no post or current user isn't original writer
+            if (post is null)
+            {
+                return Json(result);
+            }
+
+            post.ContentType = model.ContentType;
+            post.Content = model.Content;
+            post.ContentCachePath = CacheHelper.CachePost(model.ContentType, model.Content);
+            
+            post.ModifiedAt = DateTime.UtcNow;
+
+            await m_db.SaveChangesAsync()
+                      .ConfigureAwait(false);
+            
+            return Json(result);
+        }
+
+        [HttpDelete]
+        [LoginRequired]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> Delete(long postId)
+        {
+            var result = new PostResultModel();
+            
+            return Json(result);
         }
     }
 }
