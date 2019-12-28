@@ -20,6 +20,8 @@ namespace PEngine.Common.Components
 
         public void PopulateValues(ViewLocationExpanderContext context)
         {
+            if (context is null) return;
+            
             context.Values["PEngineViewLocation"] = nameof(PEngineViewLocationExpander);
         }
     }
