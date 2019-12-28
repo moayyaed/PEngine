@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace PEngine.Common.Models.Schema
@@ -16,8 +17,16 @@ namespace PEngine.Common.Models.Schema
         public string Content { get; set; }
         
         public string IpAddress { get; set; }
-        public bool IsDeleted { get; set; }
         
+        public DateTime WrittenAt { get; set; }
+        public DateTime LastModifiedAt { get; set; }
+        
+        /// <summary>
+        /// Records comment modifications (Content, Timestamp, Ip Address)
+        /// </summary>
+        public string ModifyLogJson { get; set; }
+        
+        public bool IsDeleted { get; set; }
         public long ReplyFor { get; set; }
     }
 }
