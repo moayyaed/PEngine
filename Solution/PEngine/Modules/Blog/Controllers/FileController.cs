@@ -33,7 +33,9 @@ namespace PEngine.Modules.Blog.Controllers
             
             try
             {
-                var file = await m_db.Files.FirstOrDefaultAsync(f => f.Id == fileGuid);
+                var file = await m_db.Files
+                    .FirstOrDefaultAsync(f => f.Id == fileGuid)
+                    .ConfigureAwait(false);
 
                 using var fileStream = SysFile.OpenRead(file.ActualPath);
                 return File(fileStream, file.ContentType);
@@ -68,7 +70,7 @@ namespace PEngine.Modules.Blog.Controllers
                 if (newFile.State == EntityState.Added)
                 {
                     using var targetStream = SysFile.Create(newFile.Entity.ActualPath);
-                    await file.CopyToAsync(targetStream);
+                    await file.CopyToAsync(targetStream).ConfigureAwait(false);
 
                     uploadResult.Add(
                         new FileUploadResultModel

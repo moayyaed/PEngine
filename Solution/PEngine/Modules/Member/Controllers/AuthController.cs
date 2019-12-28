@@ -28,12 +28,14 @@ namespace PEngine.Modules.Member.Controllers
         public async Task<ActionResult> SignIn(string email, string password, string redirectTo)
         {
             var result = await m_siManager.PasswordSignInAsync(email, 
-                                                    password, false, true);
+                                                    password, false, true)
+                .ConfigureAwait(false);
             var redirectLocation = redirectTo ?? "/";
             
             if (result.Succeeded)
             {
-                var user = await m_uiManager.GetUserAsync(User);
+                var user = await m_uiManager.GetUserAsync(User)
+                                            .ConfigureAwait(false);
                 user.LastLogin = DateTime.Now;
 
                 return Redirect(redirectLocation);
