@@ -30,26 +30,6 @@ namespace PEngine.Common.Models.Schema
         
         public string Tags { get; set; }
         public string Files { get; set; }
-
-        public string[] GetTagList()
-        {
-            return string.IsNullOrEmpty(Tags) ? Tags.Split(",") : Array.Empty<string>();
-        }
-
-        public Guid[] GetFileList()
-        {
-            return string.IsNullOrEmpty(Files) ? Files.Split(',')
-                                                      .Select(fileId => new Guid(fileId))
-                                                      .ToArray() : Array.Empty<Guid>();
-        }
-
-        public string Exerpt(int length)
-        {
-            return new string(
-                Content.Substring(0, length)
-                       .Where(c => !char.IsSymbol(c))
-                       .ToArray()
-                );
-        }
+        
     }
 }
