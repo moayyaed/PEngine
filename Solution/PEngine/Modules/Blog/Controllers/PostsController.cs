@@ -119,11 +119,8 @@ namespace PEngine.Modules.Blog.Controllers
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> Write([FromBody] PostWriteRequestModel model)
         {
-            var postToCreate = model.CreatePostModel();
+            var postToCreate = model.CreatePostModel(m_currentUser);
 
-            postToCreate.Writer = m_currentUser.Id;
-            postToCreate.WriterName = m_currentUser.UserName;
-            
             var addResult = await m_db.Posts.AddAsync(postToCreate);
             var result = new PostResultModel();
 
@@ -154,7 +151,7 @@ namespace PEngine.Modules.Blog.Controllers
                 return Json(result);
             }
             
-            if (post.Writer != User.CurrentId())
+            if (post.Writer != m_currentUser.Id)
             {
                 result.Message = "Not a post writer";
                 return Json(result);

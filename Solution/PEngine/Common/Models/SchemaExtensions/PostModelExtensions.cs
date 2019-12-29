@@ -36,7 +36,7 @@ namespace PEngine.Common.Models.SchemaExtensions
             
             model.ContentType = source.ContentType;
             model.Content = source.Content;
-            model.ContentCachePath = CacheHelper.Cachemodel(source.ContentType, source.Content);
+            model.ContentCachePath = CacheHelper.CachePost(source.ContentType, source.Content);
 
             model.Private = source.Private;
             model.Protected = source.Protected;
