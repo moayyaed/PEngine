@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PEngine.Common.Models.Schema;
+using PEngine.Modules.Member.Models;
 
 namespace PEngine.Modules.Member.Controllers
 {
@@ -26,9 +27,8 @@ namespace PEngine.Modules.Member.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register()
+        public async Task<ActionResult> Register(RegisterRequestModel model)
         {
-            
             return View();
         }
 
