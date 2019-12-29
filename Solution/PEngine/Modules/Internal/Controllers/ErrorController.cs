@@ -19,7 +19,7 @@ namespace PEngine.Modules.Internal.Controllers
         }
 
         [Route("/Error/401")]
-        public ViewResult Unauthorized()
+        public ViewResult UnAuthorized()
         {
             return View();
         }
