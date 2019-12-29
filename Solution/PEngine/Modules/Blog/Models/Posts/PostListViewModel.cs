@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using PEngine.Common.Models.Schema;
+using PEngine.Common.Models.SchemaExtensions;
 
 namespace PEngine.Modules.Blog.Models.Posts
 {
