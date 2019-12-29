@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PEngine.Common.Components.Filters;
 using PEngine.Common.Models;
 using PEngine.Common.Models.Schema;
+using PEngine.Common.Models.SchemaExtensions;
 using PEngine.Modules.Member.Models;
 
 namespace PEngine.Modules.Member.Controllers
@@ -13,12 +14,14 @@ namespace PEngine.Modules.Member.Controllers
     public class ManageController : Controller
     {
         private UserModel m_currentUser;
-        private UserManager<UserModel> m_manager;
+        private UserManager<UserModel> m_uManager;
+
+        private SignInManager<UserModel> m_siManager;
         
-        public ManageController(UserManager<UserModel> manager)
+        public ManageController(SignInManager<UserModel> siManager, UserManager<UserModel> uManager)
         {
-            m_manager = manager;
-            m_currentUser = manager.GetUserAsync(User).Result;
+            m_uManager = uManager;
+            m_currentUser = uManager.GetUserAsync(User).Result;
         }
         
         public IActionResult Index()
@@ -31,6 +34,11 @@ namespace PEngine.Modules.Member.Controllers
         public async Task<JsonResult> Update(RegisterRequestModel model)
         {
             var result = new ApiResultModel();
+
+            m_currentUser.UpdateUser(model);
+            var updateResult = await m_uManager.UpdateAsync(m_currentUser)
+                                              .ConfigureAwait(false);
+            result.Success = updateResult.Succeeded;
             
             return Json(result);
         }
@@ -41,7 +49,19 @@ namespace PEngine.Modules.Member.Controllers
         {
             var result = new ApiResultModel();
 
-            // TODO: Check this user is the last user
+            var deleteResult = await m_uManager.DeleteAsync(m_currentUser)
+                                              .ConfigureAwait(false);
+            result.Success = deleteResult.Succeeded;
+
+            if (result.Success)
+            {
+                await m_siManager.SignOutAsync()
+                                 .ConfigureAwait(false);
+                /*
+                 * TODO: Check this user is the last user
+                 */
+            }
+
             return Json(result);
         }
     }
