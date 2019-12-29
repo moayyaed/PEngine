@@ -1,9 +1,9 @@
+using PEngine.Common.Models;
+
 namespace PEngine.Modules.Blog.Models.Posts
 {
-    public class PostResultModel
+    public class PostResultModel : ApiResultModel
     {
-        public bool  Success { get; set; }
         public long? PostId { get; set; }
-        public string Message { get; set; }
     }
 }
