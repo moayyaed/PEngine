@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,26 @@ namespace PEngine.Modules.Member.Controllers
             m_uiManager = uiManager;
         }
 
+        public async Task<ViewResult> Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Register()
+        {
+            
+            return View();
+        }
+
+        [HttpPut]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Update()
+        {
+            
+        }
+        
         public ViewResult SignIn()
         {
             return View();
@@ -36,14 +57,26 @@ namespace PEngine.Modules.Member.Controllers
             {
                 var user = await m_uiManager.GetUserAsync(User)
                                             .ConfigureAwait(false);
+                
                 user.LastLogin = DateTime.Now;
 
+                var updateResult = m_uiManager.UpdateAsync(user)
+                                              .ConfigureAwait(false);
+                
                 return Redirect(redirectLocation);
             }
             else if (result.IsLockedOut)
             {
                 return RedirectToAction("LockedOut");
             }
+
+            return View();
+        }
+
+        public async Task<ActionResult> SignOut()
+        {
+            await m_siManager.SignOutAsync()
+                             .ConfigureAwait(false);
 
             return View();
         }
