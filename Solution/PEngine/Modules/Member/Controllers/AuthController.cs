@@ -60,12 +60,13 @@ namespace PEngine.Modules.Member.Controllers
                 
                 user.LastLogin = DateTime.Now;
 
-                var updateResult = m_uiManager.UpdateAsync(user)
-                                              .ConfigureAwait(false);
+                await m_uiManager.UpdateAsync(user)
+                                 .ConfigureAwait(false);
                 
                 return Redirect(redirectLocation);
             }
-            else if (result.IsLockedOut)
+            
+            if (result.IsLockedOut)
             {
                 return RedirectToAction("LockedOut");
             }
