@@ -22,7 +22,7 @@ namespace PEngine.Modules.Blog.Controllers
         public PostsController(BlogDbContext db, UserManager<UserModel> manager)
         {
             m_db = db;
-            m_currentUser = manager.GetUserAsync(User)?.Result;
+            m_currentUser = manager.GetUserAsync(User).Result;
         }
 
         public async Task<ViewResult> List(string searchKeyword, int page)
