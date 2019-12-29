@@ -12,6 +12,8 @@ namespace PEngine.Modules.Blog.Models.Posts
             return new PostListViewModel
             {
                 Id = post.Id,
+                WriterName = post.WriterName,
+                Category = post.Category,
                 Title = post.Title,
                 CreatedAt = post.CreatedAt,
                 Content = post.Exerpt(300),
@@ -22,6 +24,8 @@ namespace PEngine.Modules.Blog.Models.Posts
         }
         
         public long Id { get; set; }
+        public string WriterName { get; set; }
+        public string Category { get; set; }
         public string Title { get; set; }
         public DateTime CreatedAt { get; set; }
         public string Content { get; set; }
