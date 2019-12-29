@@ -10,7 +10,7 @@ namespace PEngine.Common.Models.Schema
         public long Id { get; set; }
         
         public long Writer { get; set; }
-        public string WriteName { get; set; }
+        public string WriterName { get; set; }
         
         public string Category { get; set; }
         public string Title { get; set; }
