@@ -4,3 +4,29 @@
     ViewData["Title"] = "Post Lists";
     Layout = "_Layout";
 }
+
+<div class="entity-list-wrapper">
+    @foreach (var post in Model)
+    {
+        <div class="post-entity" id="post-@post.Id">
+            <a class="post-entity-category"
+               asp-area="Blog" asp-controller="Posts" asp-action="List"
+               asp-route-searchKeyword="category:@post.Category">@post.Category</a>
+            <a class="post-entity-title"
+               asp-area="Blog" asp-controller="Posts" asp-action="Read"
+               asp-route-id="@post.Id">@post.Title</a>
+            <p class="post-entity-exerpt">@post.Content</p>
+            <ul class="post-entity-info">
+                <li>@post.WriterName</li>
+                <li>@post.CreatedAt</li>
+                @foreach (var tag in post.Tags)
+                {
+                    <li class="post-entity-tag">#@tag</li>
+                }
+            </ul>
+        </div>
+    }
+</div>
+<div class="pagination">
+    <!-- Pagination Here -->
+</div>
