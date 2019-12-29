@@ -1,12 +1,14 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PEngine.Common.Components.Database.Contexts;
 using PEngine.Common.Components.Filters;
 using PEngine.Common.Components.Helpers;
 using PEngine.Common.Models.Schema;
+using PEngine.Common.Models.SchemaExtensions;
 using PEngine.Modules.Blog.Models.Posts;
 
 namespace PEngine.Modules.Blog.Controllers
@@ -15,10 +17,12 @@ namespace PEngine.Modules.Blog.Controllers
     public class PostsController : Controller
     {
         private readonly BlogDbContext m_db;
+        private readonly UserModel m_currentUser;
 
-        public PostsController(BlogDbContext db)
+        public PostsController(BlogDbContext db, UserManager<UserModel> manager)
         {
             m_db = db;
+            m_currentUser = manager.GetUserAsync(User)?.Result;
         }
 
         public async Task<ViewResult> List(string searchKeyword, int page)
@@ -88,23 +92,37 @@ namespace PEngine.Modules.Blog.Controllers
         }
 
         [LoginRequired]
-        public async Task<ActionResult> Write(long? postId)
+        public async Task<ActionResult> Write()
         {
-            if (postId != null)
-            {
-                
-            }
-            
             return View();
         }
 
+        [LoginRequired]
+        public async Task<ActionResult> Modify(long postId)
+        {
+            var post = m_db.Posts.FirstOrDefault(post => post.Id == postId);
+
+            if (post is null)
+            {
+                return NotFound();
+            }
+            
+            if (post.Writer != m_currentUser.Id)
+            {
+                return Unauthorized();
+            }
+
+            return View(post);
+        }
+        
         [LoginRequired]
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> Write([FromBody] PostWriteRequestModel model)
         {
             var postToCreate = model.CreatePostModel();
-            
-            // TODO: set identity info to post
+
+            postToCreate.Writer = m_currentUser.Id;
+            postToCreate.WriterName = m_currentUser.UserName;
             
             var addResult = await m_db.Posts.AddAsync(postToCreate);
             var result = new PostResultModel();
@@ -119,6 +137,7 @@ namespace PEngine.Modules.Blog.Controllers
                           .ConfigureAwait(false);
             }
 
+            result.Message = "Failed to write post.";
             return Json(result);
         }
 
@@ -129,20 +148,29 @@ namespace PEngine.Modules.Blog.Controllers
             var result = new PostResultModel();
             var post = m_db.Posts.FirstOrDefault(post => post.Id == postId);
 
-            // TODO: If there is no post or current user isn't original writer
             if (post is null)
             {
+                result.Message = "No such post found";
                 return Json(result);
             }
-
-            post.ContentType = model.ContentType;
-            post.Content = model.Content;
-            post.ContentCachePath = CacheHelper.CachePost(model.ContentType, model.Content);
             
-            post.ModifiedAt = DateTime.UtcNow;
+            if (post.Writer != User.CurrentId())
+            {
+                result.Message = "Not a post writer";
+                return Json(result);
+            }
+            
+            post.UpdatePost(model);
 
-            await m_db.SaveChangesAsync()
-                      .ConfigureAwait(false);
+            var updateResult = m_db.Posts.Update(post);
+            if (updateResult.State == EntityState.Modified)
+            {
+                result.Success = true;
+                result.PostId = updateResult.Entity.Id;
+
+                await m_db.SaveChangesAsync()
+                          .ConfigureAwait(false);
+            }
             
             return Json(result);
         }
@@ -153,6 +181,28 @@ namespace PEngine.Modules.Blog.Controllers
         public async Task<JsonResult> Delete(long postId)
         {
             var result = new PostResultModel();
+            var post = m_db.Posts.FirstOrDefault(post => post.Id == postId);
+
+            if (post is null)
+            {
+                result.Message = "No such post found";
+                return Json(result);
+            }
+            
+            if (post.Writer != m_currentUser.Id)
+            {
+                result.Message = "Not a post writer";
+                return Json(result);
+            }
+
+            var deleteResult = m_db.Posts.Remove(post);
+            if (deleteResult.State == EntityState.Deleted)
+            {
+                result.Success = true;
+
+                await m_db.SaveChangesAsync()
+                          .ConfigureAwait(false);
+            }
             
             return Json(result);
         }
