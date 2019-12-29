@@ -32,13 +32,6 @@ namespace PEngine.Modules.Member.Controllers
             return View();
         }
 
-        [HttpPut]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Update()
-        {
-            return View();
-        }
-        
         public ViewResult SignIn()
         {
             return View();
