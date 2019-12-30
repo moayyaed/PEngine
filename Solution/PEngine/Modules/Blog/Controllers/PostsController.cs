@@ -19,6 +19,9 @@ namespace PEngine.Modules.Blog.Controllers
         private readonly BlogDbContext m_db;
         private readonly UserModel m_currentUser;
 
+        private bool HasPermission(PostModel model)
+            => model != null && model.Writer == m_currentUser.Id;
+
         public PostsController(BlogDbContext db, UserManager<UserModel> manager)
         {
             m_db = db;
@@ -145,15 +148,9 @@ namespace PEngine.Modules.Blog.Controllers
             var result = new PostResultModel();
             var post = m_db.Posts.FirstOrDefault(post => post.Id == postId);
 
-            if (post is null)
+            if (HasPermission(post))
             {
-                result.Message = "No such post found";
-                return Json(result);
-            }
-            
-            if (post.Writer != m_currentUser.Id)
-            {
-                result.Message = "Not a post writer";
+                result.Message = post is null ? "No such post found" : "Not a post writer";
                 return Json(result);
             }
             
@@ -180,15 +177,9 @@ namespace PEngine.Modules.Blog.Controllers
             var result = new PostResultModel();
             var post = m_db.Posts.FirstOrDefault(post => post.Id == postId);
 
-            if (post is null)
+            if (HasPermission(post))
             {
-                result.Message = "No such post found";
-                return Json(result);
-            }
-            
-            if (post.Writer != m_currentUser.Id)
-            {
-                result.Message = "Not a post writer";
+                result.Message = post is null ? "No such post found" : "Not a post writer";
                 return Json(result);
             }
 
