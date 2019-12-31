@@ -3,8 +3,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PEngine.Common.Models;
 using PEngine.Common.Models.Schema;
+using PEngine.Common.Models.SchemaExtensions;
 using PEngine.Modules.Member.Models;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace PEngine.Modules.Member.Controllers
 {
@@ -12,12 +15,12 @@ namespace PEngine.Modules.Member.Controllers
     public class AuthController : Controller
     {
         private readonly SignInManager<UserModel> m_siManager;
-        private readonly UserManager<UserModel> m_uiManager;
+        private readonly UserManager<UserModel> m_uManager;
         
         public AuthController(SignInManager<UserModel> siManager, UserManager<UserModel> uiManager)
         {
             m_siManager = siManager;
-            m_uiManager = uiManager;
+            m_uManager = uiManager;
         }
 
         public async Task<ViewResult> Register()
@@ -27,52 +30,79 @@ namespace PEngine.Modules.Member.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterRequestModel model)
+        public async Task<JsonResult> Register(RegisterRequestModel model)
         {
-            return View();
+            var result = new ApiResultModel();
+            var user = new UserModel();
+
+            /* Validate Input */
+            
+            user.UpdateUser(model);
+            var createResult = await m_uManager.CreateAsync(user, model.Password)
+                                                .ConfigureAwait(false);
+
+            result.Success = createResult.Succeeded;
+            if (!result.Success)
+            {
+                result.Message = createResult.Errors.First()
+                                             .Description;
+            }
+
+            return Json(result);
         }
 
-        public ViewResult SignIn()
+        public ViewResult SignIn(string redirectTo)
         {
+            ViewData["redirectTo"] = redirectTo ?? "/";
+            
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SignIn(string email, string password, string redirectTo)
+        public async Task<JsonResult> SignIn(string email, string password, string redirectTo)
         {
-            var result = await m_siManager.PasswordSignInAsync(email, 
-                                                    password, false, true)
+            var result = new ApiResultModel();
+            
+            var foundUser = m_uManager.FindByEmailAsync(email).Result;
+            var siResult = await m_siManager.CheckPasswordSignInAsync(foundUser, password, true)
                 .ConfigureAwait(false);
             var redirectLocation = redirectTo ?? "/";
+
+            result.Success = siResult.Succeeded;
             
-            if (result.Succeeded)
+            if (siResult == SignInResult.Success)
             {
-                var user = await m_uiManager.GetUserAsync(User)
+                var user = await m_uManager.GetUserAsync(User)
                                             .ConfigureAwait(false);
                 
                 user.LastLogin = DateTime.Now;
 
-                await m_uiManager.UpdateAsync(user)
+                await m_uManager.UpdateAsync(user)
                                  .ConfigureAwait(false);
-                
-                return Redirect(redirectLocation);
+            }
+            else if (siResult == SignInResult.LockedOut)
+            {
+                result.Message = "Account locked out due to reach of maximum fail count";
+            }
+            else if (siResult == SignInResult.NotAllowed)
+            {
+                result.Message = "Account is not allowed to login!";
+            }
+            else
+            {
+                result.Message = "Failed to login";
             }
             
-            if (result.IsLockedOut)
-            {
-                return RedirectToAction("LockedOut");
-            }
-
-            return View();
+            return Json(result);
         }
 
-        public async Task<ActionResult> SignOut()
+        public async Task<ActionResult> SignOut(string redirectTo)
         {
             await m_siManager.SignOutAsync()
                              .ConfigureAwait(false);
 
-            return View();
+            return Redirect(redirectTo ?? "/");
         }
 
         public ActionResult LockedOut()
