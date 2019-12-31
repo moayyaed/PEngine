@@ -1,1 +1,28 @@
-﻿[404] Page Not Found! 
+﻿<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+            
+        <title>PEngine Error Report: Not Found</title>
+        
+        <style>
+            a { text-decoration: none; color: #505050; cursor: pointer }
+            a:hover { color: #a0a0a0 }
+            a:active { color: #202020 }
+        </style>
+    </head>
+    <body>
+        <h1>404 : Not Found</h1>
+            
+        <p>The resource you have requested seems to be gone or not existed so far.</p>
+        <p>Please contact with blog owner or system administrator.</p>
+
+        <a id="refresh">Retry?</a> <a id="goBack">Go Back</a>
+    
+        <script>
+            document.querySelector("#refresh").addEventListener("click", function () { location.reload() });
+            document.querySelector("#goBack").addEventListener("click", function () { history.go(-1); });
+        </script>
+    </body>
+
+</html>
