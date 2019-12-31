@@ -17,10 +17,10 @@ namespace PEngine.Modules.Member.Controllers
         private readonly SignInManager<UserModel> m_siManager;
         private readonly UserManager<UserModel> m_uManager;
         
-        public AuthController(SignInManager<UserModel> siManager, UserManager<UserModel> uiManager)
+        public AuthController(SignInManager<UserModel> siManager, UserManager<UserModel> uManager)
         {
             m_siManager = siManager;
-            m_uManager = uiManager;
+            m_uManager = uManager;
         }
 
         public async Task<ViewResult> Register()
@@ -67,18 +67,14 @@ namespace PEngine.Modules.Member.Controllers
             var foundUser = m_uManager.FindByEmailAsync(email).Result;
             var siResult = await m_siManager.CheckPasswordSignInAsync(foundUser, password, true)
                 .ConfigureAwait(false);
-            var redirectLocation = redirectTo ?? "/";
 
             result.Success = siResult.Succeeded;
             
             if (siResult == SignInResult.Success)
-            {
-                var user = await m_uManager.GetUserAsync(User)
-                                            .ConfigureAwait(false);
-                
-                user.LastLogin = DateTime.Now;
+            {    
+                foundUser.LastLogin = DateTime.Now;
 
-                await m_uManager.UpdateAsync(user)
+                await m_uManager.UpdateAsync(foundUser)
                                  .ConfigureAwait(false);
             }
             else if (siResult == SignInResult.LockedOut)
