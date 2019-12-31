@@ -19,6 +19,7 @@ namespace PEngine.Common.Models.SchemaExtensions
 
         public static UserModel UpdateUser(this UserModel model, RegisterRequestModel source)
         {
+            model.Email = source.Email;
             model.UserName = source.UserName;
             model.Signature = source.Signature;
 
