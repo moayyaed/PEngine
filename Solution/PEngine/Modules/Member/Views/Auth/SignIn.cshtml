@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "SignIn";
+    Layout = "MemberLayout";
+}
+<h2>@ViewData["Title"]</h2>
+
+<form id="loginForm" method="post">
+    <div class="form-entity">
+        <label for="inputEmail">Email</label>
+        <input type="email" id="inputEmail" name="Email" placeholder="example@example.com" required />
+    </div>
+    <div class="form-entity">
+        <label for="inputPassword">Password</label>
+        <input type="password" id="inputPassword" name="Password" />
+    </div>
+
+    <input type="hidden" name="redirectTo" value="@ViewData["redirectTo"]" />
+    
+    <input type="submit" value="Login" />
+    @Html.AntiForgeryToken()
+</form>
+
+<script>
+    $(
+        () => {
+            $("#loginForm").on("submit", () => {
+                let formPayload = $("#loginForm").serialize();
+                console.log(formPayload);
+
+                $.post("/Member/Auth/SignIn", formPayload)
+                 .done( (result) => {
+                    if (result.success === false) {
+                        alert("Failed to register account\nReason: " + result.message);
+                        return;
+                    }
+                    alert("Welcome!");
+                 });             
+                event.preventDefault();
+            });
+        }
+    );
+</script>
