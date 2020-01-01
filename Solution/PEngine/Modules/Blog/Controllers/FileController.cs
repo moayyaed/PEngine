@@ -58,6 +58,10 @@ namespace PEngine.Modules.Blog.Controllers
             
             foreach (var file in uploadingFiles)
             {
+                /*
+                 * TODO: ContentType must be verified
+                 */
+                
                 var newFile = await m_db.Files.AddAsync(
                     new FileModel {
                         Id = Guid.NewGuid(),
