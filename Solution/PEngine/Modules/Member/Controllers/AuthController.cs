@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PEngine.Common.Models;
@@ -17,7 +19,8 @@ namespace PEngine.Modules.Member.Controllers
         private readonly SignInManager<UserModel> m_siManager;
         private readonly UserManager<UserModel> m_uManager;
         
-        public AuthController(SignInManager<UserModel> siManager, UserManager<UserModel> uManager)
+        public AuthController(SignInManager<UserModel> siManager, 
+                              UserManager<UserModel> uManager)
         {
             m_siManager = siManager;
             m_uManager = uManager;
@@ -53,25 +56,37 @@ namespace PEngine.Modules.Member.Controllers
 
         public ViewResult SignIn(string redirectTo)
         {
-            ViewData["redirectTo"] = redirectTo ?? "/";
+            ViewData["RedirectTo"] = redirectTo ?? "/";
+            ViewData["Logged"] = User.Identity.IsAuthenticated;
+
+            var cc = m_siManager.Context.User;
             
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<JsonResult> SignIn(string email, string password, string redirectTo)
+        public async Task<JsonResult> SignIn(string email, string password)
         {
             var result = new ApiResultModel();
             
             var foundUser = m_uManager.FindByEmailAsync(email).Result;
-            var siResult = await m_siManager.CheckPasswordSignInAsync(foundUser, password, true)
+            if (foundUser is null)
+            {
+                result.Message = "Failed to login";
+                return Json(result);
+            }
+            
+            var siResult = await m_siManager.PasswordSignInAsync(foundUser, password, 
+                                             isPersistent: true,
+                                             lockoutOnFailure: true)
                 .ConfigureAwait(false);
 
             result.Success = siResult.Succeeded;
+
             
             if (siResult == SignInResult.Success)
-            {    
+            {
                 foundUser.LastLogin = DateTime.Now;
 
                 await m_uManager.UpdateAsync(foundUser)
