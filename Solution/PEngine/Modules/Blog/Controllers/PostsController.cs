@@ -54,7 +54,7 @@ namespace PEngine.Modules.Blog.Controllers
 
         [HttpGet("/Posts/{id}")]
         [HttpGet("/Blog/Posts/Read/{id}")]
-        public async Task<ActionResult> Read(int id)
+        public async Task<ViewResult> Read(int id)
         {
             var post = await m_db.Posts.FirstOrDefaultAsync(post => post.Id == id)
                                        .ConfigureAwait(false);
@@ -62,7 +62,7 @@ namespace PEngine.Modules.Blog.Controllers
             if (post is null ||
                 (!User.Identity.IsAuthenticated && post.Private))
             {
-                return NotFound();
+                return View("NotFound");
             }
             
             if (post.Protected)
@@ -79,7 +79,7 @@ namespace PEngine.Modules.Blog.Controllers
         [HttpPost("/Posts/{id}")]
         [HttpPost("/Blog/Posts/Read/{id}")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ReadProtected(int id, string password)
+        public async Task<ViewResult> ReadProtected(int id, string password)
         {
             var passwordHash = CryptoHelper.Sha256(password);
             var post = await m_db.Posts.FirstOrDefaultAsync(_post => _post.Id == id 
@@ -88,31 +88,31 @@ namespace PEngine.Modules.Blog.Controllers
 
             if (post is null)
             {
-                return NotFound();
+                return View("NotFound");
             }
 
             return View(post);
         }
 
         [LoginRequired]
-        public async Task<ActionResult> Write()
+        public async Task<ViewResult> Write()
         {
             return View();
         }
 
         [LoginRequired]
-        public async Task<ActionResult> Modify(long postId)
+        public async Task<ViewResult> Modify(long postId)
         {
             var post = m_db.Posts.FirstOrDefault(post => post.Id == postId);
 
             if (post is null)
             {
-                return NotFound();
+                return View("NotFound");
             }
             
             if (post.Writer != m_currentUser.Id)
             {
-                return Unauthorized();
+                return View("Unauthorized");
             }
 
             return View(post);
