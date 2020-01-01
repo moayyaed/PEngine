@@ -15,9 +15,11 @@ namespace PEngine.Modules.Blog.Controllers
             m_db = context;
         }
         
-        public async Task<JsonResult> Index(long postId)
+        public async Task<JsonResult> Index(long postId, int page)
         {
-            var post = await m_db.Comments.Where(post => post.Id == postId)
+            var post = await m_db.Comments
+                .Skip(10 * page)
+                .Where(post => post.Id == postId)
                 .ToListAsync()
                 .ConfigureAwait(false);
 
@@ -25,7 +27,19 @@ namespace PEngine.Modules.Blog.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> Write(/* CommentWriteRequestModel */)
+        public async Task<JsonResult> Write(/* CommentUpdateRequestModel */)
+        {
+            return Json("");
+        }
+
+        [HttpPut]
+        public async Task<JsonResult> Modify( /* CommentUpdateRequestModel */)
+        {
+            return Json("");
+        }
+
+        [HttpDelete]
+        public async Task<JsonResult> Delete(long commentId)
         {
             return Json("");
         }
