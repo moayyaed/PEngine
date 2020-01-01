@@ -10,7 +10,6 @@ using PEngine.Modules.Member.Models;
 namespace PEngine.Modules.Member.Controllers
 {
     [Area("Member")]
-    [LoginRequired]
     public class ManageController : Controller
     {
         private UserModel m_currentUser;
@@ -21,7 +20,7 @@ namespace PEngine.Modules.Member.Controllers
         public ManageController(SignInManager<UserModel> siManager, UserManager<UserModel> uManager)
         {
             m_uManager = uManager;
-            m_currentUser = uManager.GetUserAsync(User).Result;
+            m_siManager = siManager;
         }
         
         public IActionResult Index()
