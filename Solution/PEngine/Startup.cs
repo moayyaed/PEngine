@@ -49,21 +49,6 @@ namespace PEngine
                 options.ViewLocationExpanders.Add(new PEngineViewLocationExpander());
             });
 
-            // Authentication
-            services.AddSession();
-            services.AddIdentity<UserModel, IdentityRole>(
-                    options =>
-                    {
-                        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                        options.Lockout.MaxFailedAccessAttempts = 3;
-
-                        options.User.RequireUniqueEmail = true;
-
-                        options.Password.RequiredLength = 8;
-                    }
-                ).AddEntityFrameworkStores<BlogDbContext>();
-             
-
             // Load DB Connection String from appsettings.json
             var dbms = (DBMSType) Configuration.GetValue("Dbms", 0);
             var connectionString = Configuration.GetConnectionString("Database"); 
@@ -74,9 +59,23 @@ namespace PEngine
             }
 
             services.UseDatabase(dbms, connectionString);
+            
+            // Authentication
+            services.AddSession();
+            services.AddAuthentication();
+            services.AddIdentity<UserModel, IdentityRole<long>>(
+                options =>
+                {
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                    options.Lockout.MaxFailedAccessAttempts = 3;
 
+                    options.User.RequireUniqueEmail = true;
+                    options.Password.RequiredLength = 8;
+                }
+            ).AddEntityFrameworkStores<BlogDbContext>();
+            
             // Configure DI Containers
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddHttpContextAccessor();
         }
 
         public static void Configure(IApplicationBuilder app)
