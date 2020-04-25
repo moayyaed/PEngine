@@ -4,9 +4,9 @@
     <img src="Documentation/PEngineBanner.png" />
 </p>
 
-![License](https://img.shields.io/github/license/0x00000FF/PEngine) ![dotnet Version](https://img.shields.io/badge/dotnet-3.0-blueviolet)
+![License](https://img.shields.io/github/license/0x00000FF/PEngine) ![dotnet Version](https://img.shields.io/badge/dotnet-3.1-blueviolet)
 
-PEngine is a content management system (CMS) for general purpose websites. It is written in C#, powered by .NET Core and ASP.NET Core MVC.
+PEngine is a content management system (CMS) for general purpose websites. It is written in C#, powered by ASP.NET Core MVC with Blazor.
 
 ## Build Status
 
@@ -28,7 +28,7 @@ PEngine is a content management system (CMS) for general purpose websites. It is
 
 ## How to Build
 
- * Install [.NET Core 3.0 SDK](https://dotnet.microsoft.com/download)
+ * Install [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download)
  * `git clone https://github.com/0x00000FF/PEngine`
  * `dotnet build Solution`
 
